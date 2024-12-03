@@ -1,0 +1,11 @@
+[Unit]
+Description=Run daily generate-index service file at 5 am
+
+[Timer]
+# This will run the service file everyday at 5am
+OnCalender=*-*-* 5:00:00
+Persistant=true
+
+[Install]
+# This target sets up timer units that should be active after boot and is best suited for recurring tasks
+WantedBy=timers.target
