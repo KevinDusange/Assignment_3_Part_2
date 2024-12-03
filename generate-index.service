@@ -1,0 +1,14 @@
+[Unit]
+Description=Running the generate_indeex script which generates an index.html file
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# Tells the system to execute the 'generate_index' script located in /var/lib/webgen/bin/
+ExecStart=/var/lib/webgen/bin/generate_index
+Type=oneshot
+User=webgen
+Group=webgen
+
+[Install]
+WantedBy=multi-user.target
