@@ -4,7 +4,57 @@
 #### ip address for web1: 165.232.148.70
 #### ip address for web2: 165.232.153.16
 
-### Part 1: Setting Up A New Server
+## Information
+
+The purpose of this project is to...
+
+## Part 1: Setting Up Load Balancer
+
+For part 1 of this project we will create 2 droplets on digital ocean that are connected to a load balancer. The first step is to create 2 new droplets running Arch Linux with a tag "web". Then we will create a load balancer using these settings
+- Regional, SFO3, same as your servers
+- Default VPC, same as your servers
+- External(public)
+- Use the "web" tag to load balance all servers with a web tag in the SF03 region.
+
+Once created you get an offline error on digital ocean for both droplets which is fine because we haven't logged onto the droplets and configured them with nginx yet.
+
+We'll first add them to the `.ssh/config` file so that we can `ssh <droplet-name>` to log onto them. In my case I created 2 droplets called web1 and web2 and added them as such.
+
+```
+Host web1
+  HostName 165.232.148.70 # web1's IP
+  User arch
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/do-key
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+
+Host web2
+  HostName 165.232.153.16 # web2's IP
+  User arch
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/do-key
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+```
+
+Now we can log on to both droplets using `ssh web1` and `ssh web2`. Before we set up new users and download the files, we'll log onto both droplets in the terminal and add some packages we may need. Those packages are neovim, nginx, git, and ufw.
+
+First we'll sync, refresh and update all packages.
+
+```bash
+sudo pacman -Syu
+```
+
+Then we can install the required packages.
+
+```bash
+sudo pacman -S neovim nginx git ufw
+```
+
+Now that we have the packages installed we can `cd` in both droplets which will take us to our home directory where we will begin part 2.
+
+## Part 2: Setting Up A New Server
 
 ### Step 1: Create a System User
 
@@ -45,7 +95,13 @@ sudo chown -R webgen:webgen /var/lib/webgen
 
 ### Step 2: Copy the generate_index script
 
-After downloading the generate_index script use the copy command below to copy it to the correct location:
+In your droplets home directory perform the command below to download the necessary files to compete steps 2, 3 and 4. 
+
+```bash
+git clone https://github.com/KevinDusange/Assignment_3_Part_2.git
+```
+
+After downloading the scripts, cd into the git file and use the copy command below.
 
 ```bash
 sudo cp generate_index /var/lib/webgen/bin/
@@ -59,7 +115,7 @@ sudo chmod +x /var/lib/webgen/bin/generate_index
 
 ### Step 3: Copy the systemd service file and timer file
 
-After downloading the `generate-index.server` and `generate-index.timer` files we need to copy the files to the correct locations using the command below. Since these are .service and .timer files, they will need to be moved into the `/etc/systemd/system` directory because that is where those types of files belong.
+Now we need to copy the `.service` and `.timer` files to the correct locations using the command below. Since these are `.service` and `.timer` files, they will need to be moved into the `/etc/systemd/system` directory.
 
 ```bash
 sudo cp generate-index.service /etc/systemd/system/
@@ -87,7 +143,7 @@ sudo systemctl status generate-index.service
 
 ### Step 4: Copy the nginx configuration files
 
-After downloading the `nginx.conf` files we will need to move it to the nginx configuration directory which is `/etc/nginx/nginx.conf` using the command below:
+Now we will need to move the `nginx.conf` file to the nginx configuration directory which is `/etc/nginx/nginx.conf` using the command below:
 
 ```bash
 sudo cp nginx.conf /etc/nginx/nginx.conf
@@ -100,7 +156,7 @@ sudo mkdir -p /etc/nginx/sites-available
 sudo mkdir -p /etc/nginx/sites-enabled
 ```
 
-After downlaodint the `server_block.conf` file we will need to copy it to the correct location as well as creating a symlink using the command below to move it into the enabled sites directory:
+Now we will copy the `server_block.conf` file to the correct location as well as creating a symlink using the command below to move it into the `sited-enabled` directory:
 
 ```bash
 sudo cp server_block.conf /etc/nginx/sites-available/
@@ -164,9 +220,4 @@ To                         Action      From
 22/tcp (v6)                ALLOW IN    Anywhere (v6)
 ```
 
-Done! Now your server is up and running!
-
-### Part 2: Setting Up Load Balancer
-
-
-
+Done! Now your servers are up and running and using the load balaner IP we can see that it is balaning the load between both servers!
