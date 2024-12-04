@@ -11,13 +11,13 @@ The purpose of this project is to set up and configure web servers using Digital
 
 ## Part 1: Setting Up Load Balancer
 
-For part 1 of this project we will create 2 droplets on digital ocean that are connected to a load balancer. The first step is to create 2 new droplets running Arch Linux with a tag "web". Then we will create a load balancer using these settings
+For part 1 of this project we will create 2 droplets on DigitalOcean that are connected to a load balancer. The first step is to create 2 new droplets running Arch Linux with a tag "web". Then we will create a load balancer using these settings
 - Regional, SFO3, same as your servers
 - Default VPC, same as your servers
 - External(public)
 - Use the "web" tag to load balance all servers with a web tag in the SF03 region.
 
-Once created you get an offline error on digital ocean for both droplets which is fine because we haven't logged onto the droplets and configured them with nginx yet.
+Once created you get an offline error on DigitalOcean for both droplets which is fine because we haven't logged onto the droplets and configured them with nginx yet.
 
 We'll first add them to the `.ssh/config` file so that we can `ssh <droplet-name>` to log onto them. In my case I created 2 droplets called web1 and web2 and added them as such.
 
