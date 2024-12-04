@@ -58,6 +58,9 @@ Now that we have the packages installed we can `cd` in both droplets which will 
 
 ### Step 1: Create a System User
 
+>[!note] The steps in part 2 will need to be performed on both droplets, you can do all the steps on one droplet and do it again on the second droplet or you can have both droplets open and do them both side by side.
+
+
 The reason we are creating a system user instaed of a regular user is because a system user has better security due to limited privelages and a system user is better suited for running system service tasks such as running nginx due to its isolation from regular users. 
 
 We will create a new system user called `webgen` using the command below:
