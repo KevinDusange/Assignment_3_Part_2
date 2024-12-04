@@ -1,12 +1,13 @@
 # Assignment_3_Part_2
 
 #### ip address for load balancer: 146.190.13.17
+#### ip address for load balancer documents: 146.190.13.17/documents
 #### ip address for web1: 165.232.148.70
 #### ip address for web2: 165.232.153.16
 
 ## Information
 
-The purpose of this project is to...
+The purpose of this project is to set up and configure web servers using DigitalOcean droplets and a load balancer. By creating two web server droplets and configuring them with Nginx, systemd services, and firewall rules, this project goes over the steps to build a load-balanced web application. This setup ensures that incoming traffic is distributed across multiple servers, improving availability and reliability.
 
 ## Part 1: Setting Up Load Balancer
 
@@ -56,13 +57,13 @@ Now that we have the packages installed we can `cd` in both droplets which will 
 
 ## Part 2: Setting Up A New Server
 
-### Step 1: Create a System User
+### Step 1: Create A System User
 
 > [!note] 
 > The steps in part 2 will need to be performed on both droplets, you can do all the steps on one droplet and do it again on the second droplet or you can have both droplets open and do them both side by side.
 
 
-The reason we are creating a system user instaed of a regular user is because a system user has better security due to limited privelages and a system user is better suited for running system service tasks such as running nginx due to its isolation from regular users. 
+The reason we are creating a system user instaed of a regular user is because a system user has better security due to limited privileges and a system user is better suited for running system service tasks such as running nginx due to its isolation from regular users. 
 
 We will create a new system user called `webgen` using the command below:
 
@@ -91,7 +92,7 @@ sudo chown -R webgen:webgen /var/lib/webgen
 
 `-R`: This option means the ownership will be applied recursively which means it will change the ownership of the `/var/lib/webgen` directory as well as all its subdirectories (such as bin and HTML). 
 
-#### For steps 2, 3, and 4 I am showing the commands using `cp` but you can also use `mv`
+#### For Steps 2, 3, and 4 I am showing the commands using `cp` but you can also use `mv`
 
 `cp` will copy the sripts to the specified locations but also leave the original file in the original downloaded location
 
@@ -99,7 +100,7 @@ sudo chown -R webgen:webgen /var/lib/webgen
 
 ### Step 2: Copy the generate_index script
 
-In your droplets home directory perform the command below to download the necessary files to compete steps 2, 3 and 4. 
+In your droplets home directory perform the command below to download the necessary files to complete steps 2, 3 and 4. 
 
 ```bash
 git clone https://github.com/KevinDusange/Assignment_3_Part_2.git
@@ -139,6 +140,11 @@ To check if the timer is active we can run the command below:
 sudo systemctl status generate-index.timer
 ```
 
+We can also start our service file using the command below:
+
+```bash
+sudo systemctl start generate-index.service
+```
 To check if the service runs correctly we can run the command below:
 
 ```bash
@@ -224,4 +230,4 @@ To                         Action      From
 22/tcp (v6)                ALLOW IN    Anywhere (v6)
 ```
 
-Done! Now your servers are up and running and using the load balaner IP we can see that it is balaning the load between both servers!
+Done! Now your servers are up and running and by visting the load balaner IP we can see that it is balaning the load between both servers!
