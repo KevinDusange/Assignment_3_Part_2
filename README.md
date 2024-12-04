@@ -4,7 +4,7 @@
 #### ip address for web1: 165.232.148.70
 #### ip address for web2: 165.232.153.16
 
-### Setting Up A New Server
+### Part 1: Setting Up A New Server
 
 ### Step 1: Create a System User
 
@@ -166,7 +166,7 @@ To                         Action      From
 
 Done! Now your server is up and running!
 
-### End of Part 1 and Start of Part 2
+### Part 2: Setting Up Load Balancer
 
 
 
