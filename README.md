@@ -1,6 +1,8 @@
 # Assignment_3_Part_2
 
-#### ip address for digital ocean droplet: IP HERE
+#### ip address for load balancer: 146.190.13.17
+#### ip address for web1: 165.232.148.70
+#### ip address for web2: 165.232.153.16
 
 ### Setting Up A New Server
 
@@ -23,8 +25,8 @@ sudo useradd --system -d /var/lib/webgen -s /usr/sbin/nologin webgen
 Now we will create the sub-directories inside of the new users home directory using the commands below:
 
 ```bash
-sudo mkdir /var/lib/webgen/HTML
-sudo mkdir /var/lib/webgen/bin
+sudo mkdir -p /var/lib/webgen/HTML
+sudo mkdir -p /var/lib/webgen/bin
 ```
 
 And finally we will change the ownership of the newly created directory using the command below:
@@ -94,8 +96,8 @@ sudo cp nginx.conf /etc/nginx/nginx.conf
 Next we will create the directories `sites-available` and `sites-enabled` using the command below:
 
 ```bash
-sudo mkdir /etc/nginx/sites-available
-sudo mkdir /etc/nginx/sites-enabled
+sudo mkdir -p /etc/nginx/sites-available
+sudo mkdir -p /etc/nginx/sites-enabled
 ```
 
 After downlaodint the `server_block.conf` file we will need to copy it to the correct location as well as creating a symlink using the command below to move it into the enabled sites directory:
@@ -163,4 +165,8 @@ To                         Action      From
 ```
 
 Done! Now your server is up and running!
+
+### End of Part 1 and Start of Part 2
+
+
 
